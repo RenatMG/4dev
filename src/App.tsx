@@ -1,15 +1,11 @@
-import { Suspense } from "react";
 import AppRouter from './app/providers/router/AppRouter';
+import { MainLayout } from './app/layouts/MainLayout';
 
 function App() {
     return (
-        <Suspense fallback="">
-
-            <div className="content-page">
-
-                <AppRouter />
-            </div>
-        </Suspense>
+        <MainLayout>
+            <AppRouter />
+        </MainLayout>
     );
 }
 
