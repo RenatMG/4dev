@@ -1,8 +1,15 @@
+import { Suspense } from "react";
+import AppRouter from './app/providers/router/AppRouter';
+
 function App() {
     return (
-        <div className="App">
-            hello
-        </div>
+        <Suspense fallback="">
+
+            <div className="content-page">
+
+                <AppRouter />
+            </div>
+        </Suspense>
     );
 }
 
