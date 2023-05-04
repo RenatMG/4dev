@@ -1,7 +1,7 @@
 import { Endpoints } from './endpoints';
 
 export const baseUrl = () => {
-    return 'http://localhost:5000';
+    return process.env.REACT_APP_API_URL;
 };
 
 export const combineUrl = (endpoint: Endpoints, path: (string | number)[] = []) => {
