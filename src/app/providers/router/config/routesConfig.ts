@@ -2,18 +2,7 @@ import { RouteProps } from "react-router-dom";
 import { ErrorPage } from "../../../../pages/Error";
 import { TasksPage } from "../../../../pages/Tasks";
 import { MainPage } from '../../../../pages/Main';
-
-export enum AppRoutes {
-    MAIN = 'main',
-    TASKS = 'tasks',
-    ERROR = 'error'
-}
-
-export const RoutePath: Record<AppRoutes, string> = {
-    [AppRoutes.MAIN]: '/',
-    [AppRoutes.TASKS]: '/tasks',
-    [AppRoutes.ERROR]: '/error',
-};
+import { AppRoutes, RoutePath } from '../../../../shared/config/route';
 
 export const routeConfig: Record<AppRoutes, RouteProps> = {
     [AppRoutes.MAIN]: {

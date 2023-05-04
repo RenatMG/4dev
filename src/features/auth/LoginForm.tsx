@@ -1,48 +1,63 @@
-import { Button, Form, Input } from 'antd';
-import { FC } from 'react';
+import { useAuth } from 'app/providers/auth/AuthProvider';
+import { Button, Input } from 'antd';
+import { FC, useEffect, useState } from 'react';
+import styles from './LoginForm.module.scss';
+import { Controller, useForm } from 'react-hook-form';
 
 const LoginForm: FC = () => {
-    const onFinish = (values: any) => {
-        console.log('Success:', values);
+
+    const { signIn } = useAuth();
+    const [error, setError] = useState('');
+    const { control, handleSubmit, watch } = useForm();
+
+    const onSubmit = async (data: any) => {
+        const result = await signIn(data);
+        if (!result) {
+            setError('Неверный логин или пароль!');
+        }
     };
 
-    const onFinishFailed = (errorInfo: any) => {
-        console.log('Failed:', errorInfo);
-    };
+    useEffect(() => {
+        watch(() => {
+            if (!!error) {
+                setError('');
+            }
+        });
+    }, [error, watch]);
 
     return (
-        <Form
-            name="basic"
-            labelCol={{ span: 8 }}
-            wrapperCol={{ span: 16 }}
-            style={{ maxWidth: 600 }}
-            initialValues={{ remember: true }}
-            onFinish={onFinish}
-            onFinishFailed={onFinishFailed}
-            autoComplete="off"
+        <form
+            onSubmit={handleSubmit(onSubmit)}
+            className={styles.form}
         >
-            <Form.Item
-                label="Username"
-                name="username"
-                rules={[{ required: true, message: 'Please input your username!' }]}
-            >
-                <Input autoComplete="new-password" />
-            </Form.Item>
+            {error && <span className={styles.error}>{error}</span>}
+            <div className={styles.hidden}>
+                <input type="text" autoComplete="new-password" />
+                <input type="password" autoComplete="new-password" />
+            </div>
+            <div className={styles.group}>
+                <strong>Логин</strong>
+                <Controller
+                    render={({ field }) => <Input {...field} />}
+                    name="login"
+                    control={control}
+                    rules={{ required: true }}
+                />
+            </div>
+            <div className={styles.group}>
+                <strong>Пароль</strong>
+                <Controller
 
-            <Form.Item
-                label="Password"
-                name="password"
-                rules={[{ required: true, message: 'Please input your password!' }]}
-            >
-                <Input.Password key={Math.random()} autoComplete="new-password" type="password" />
-            </Form.Item>
-
-            <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
-                <Button type="primary" htmlType="submit">
-                    Войти
-                </Button>
-            </Form.Item>
-        </Form>
+                    render={({ field }) => <Input.Password {...field} type="password" />}
+                    name="password"
+                    control={control}
+                    rules={{ required: true }}
+                />
+            </div>
+            <Button type="primary" htmlType="submit">
+                Войти
+            </Button>
+        </form>
     );
 };
 
