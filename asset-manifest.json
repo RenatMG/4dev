@@ -1,0 +1,35 @@
+{
+  "files": {
+    "main.css": "/hr-digital/static/css/main.421960e7.css",
+    "main.js": "/hr-digital/static/js/main.020fa025.js",
+    "static/js/343.7bbc705d.chunk.js": "/hr-digital/static/js/343.7bbc705d.chunk.js",
+    "static/css/798.53620a0d.chunk.css": "/hr-digital/static/css/798.53620a0d.chunk.css",
+    "static/js/798.3971efa2.chunk.js": "/hr-digital/static/js/798.3971efa2.chunk.js",
+    "static/css/468.f874c8f1.chunk.css": "/hr-digital/static/css/468.f874c8f1.chunk.css",
+    "static/js/468.4314a608.chunk.js": "/hr-digital/static/js/468.4314a608.chunk.js",
+    "static/css/386.013d9c6f.chunk.css": "/hr-digital/static/css/386.013d9c6f.chunk.css",
+    "static/js/386.8f222f7a.chunk.js": "/hr-digital/static/js/386.8f222f7a.chunk.js",
+    "static/js/866.f898c31b.chunk.js": "/hr-digital/static/js/866.f898c31b.chunk.js",
+    "static/js/541.216be7ec.chunk.js": "/hr-digital/static/js/541.216be7ec.chunk.js",
+    "static/js/796.7601ccd0.chunk.js": "/hr-digital/static/js/796.7601ccd0.chunk.js",
+    "static/js/197.1b46b5f8.chunk.js": "/hr-digital/static/js/197.1b46b5f8.chunk.js",
+    "index.html": "/hr-digital/index.html",
+    "main.421960e7.css.map": "/hr-digital/static/css/main.421960e7.css.map",
+    "main.020fa025.js.map": "/hr-digital/static/js/main.020fa025.js.map",
+    "343.7bbc705d.chunk.js.map": "/hr-digital/static/js/343.7bbc705d.chunk.js.map",
+    "798.53620a0d.chunk.css.map": "/hr-digital/static/css/798.53620a0d.chunk.css.map",
+    "798.3971efa2.chunk.js.map": "/hr-digital/static/js/798.3971efa2.chunk.js.map",
+    "468.f874c8f1.chunk.css.map": "/hr-digital/static/css/468.f874c8f1.chunk.css.map",
+    "468.4314a608.chunk.js.map": "/hr-digital/static/js/468.4314a608.chunk.js.map",
+    "386.013d9c6f.chunk.css.map": "/hr-digital/static/css/386.013d9c6f.chunk.css.map",
+    "386.8f222f7a.chunk.js.map": "/hr-digital/static/js/386.8f222f7a.chunk.js.map",
+    "866.f898c31b.chunk.js.map": "/hr-digital/static/js/866.f898c31b.chunk.js.map",
+    "541.216be7ec.chunk.js.map": "/hr-digital/static/js/541.216be7ec.chunk.js.map",
+    "796.7601ccd0.chunk.js.map": "/hr-digital/static/js/796.7601ccd0.chunk.js.map",
+    "197.1b46b5f8.chunk.js.map": "/hr-digital/static/js/197.1b46b5f8.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.421960e7.css",
+    "static/js/main.020fa025.js"
+  ]
+}
