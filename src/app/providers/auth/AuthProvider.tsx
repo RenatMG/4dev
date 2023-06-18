@@ -1,70 +1,85 @@
 import { createContext, FC, PropsWithChildren, useEffect, useState } from 'react';
-import { createId } from '@paralleldrive/cuid2';
-import { ACCESS_TOKEN, EXPIRE_TIME } from 'shared/config/auth';
+import { getAuth, onAuthStateChanged, signInWithEmailAndPassword, signOut } from "firebase/auth";
+
+import { EXPIRE_TIME } from 'shared/config/auth';
 import { useContext } from 'react';
 import { Auth } from '../../../shared/interfaces/auth.interface';
 import useSession from './hooks/useSession';
 import { useNavigate } from 'react-router-dom';
 import { AppRoutes, RoutePath } from '../../../shared/config/route';
 
+import { User } from '../../../shared/interfaces/user.interface';
+
 interface ContextProps {
-    authorized: boolean;
-    user: string;
-    signIn: (data: Auth) => string | null;
-    signOut: () => void;
+    authenticated: boolean;
+    user: User | null;
+    error: string;
+    login: (data: Auth) => void;
+    logout: () => void;
+    setError: (error: string) => void;
 }
 
 export const AuthContext = createContext<ContextProps>({} as ContextProps);
 export const useAuth = () => useContext(AuthContext);
+const auth = getAuth();
 
 
 const AuthContextProvider: FC<PropsWithChildren> = ({ children }) => {
-
     const navigate = useNavigate();
-    const [authorized, setAuthorized] = useState(false);
-    const [token, setToken] = useState<string>('');
-    const [user, setUser] = useState<string>('');
+    const [user, setUser] = useState<User | null>(null);
+    const [error, setError] = useState<string>('');
 
-    const signIn = (data: { login: string, password: string }) => {
-        const { login, password } = data;
-        if (login === 'admin' && password === 'admin') {
-            const fakeToken = window.btoa(login + ':' + createId());
-            localStorage.setItem(ACCESS_TOKEN, fakeToken);
-            setToken(fakeToken);
-            setUser(login);
-            return fakeToken;
-        }
-        return null;
+    const login = ({ email, password }: { email: string, password: string }) => {
+        signInWithEmailAndPassword(auth, email, password)
+            .then((userCredential) => {
+                const user = userCredential.user;
+                setUser({
+                    id: user.uid,
+                    email: user.email,
+                });
+            })
+            .catch(() => {
+                setError('Неверный логин или пароль!');
+            });
     };
 
-    const signOut = async () => {
-        localStorage.removeItem(ACCESS_TOKEN);
-        setAuthorized(false);
-        setToken('');
-        navigate(RoutePath[AppRoutes.MAIN]);
+    const logout = async () => {
+        signOut(auth).then(() => {
+            console.log('Sign-out successful');
+            navigate(RoutePath[AppRoutes.MAIN]);
+        }).catch((error) => {
+            console.log('Sign-out error: ' + error.message());
+        });
     };
 
     useSession({
-        callback: signOut,
+        callback: logout,
         expireTime: EXPIRE_TIME
     });
 
     useEffect(() => {
-        const accessToken = token || localStorage.getItem(ACCESS_TOKEN);
-        setAuthorized(!!accessToken);
-        if (accessToken) {
-            const user = window.atob(accessToken).split(':')[0];
+        const listen = onAuthStateChanged(auth, (user) => {
             if (user) {
-                setUser(user);
+                setUser({
+                    id: user.uid,
+                    email: user.email,
+                });
+            } else {
+                setUser(null);
             }
-        }
-    }, [token]);
+        });
+        return () => {
+            listen();
+        };
+    }, []);
 
     const context = {
-        signIn,
-        signOut,
-        authorized,
+        login,
+        logout,
         user,
+        error,
+        setError,
+        authenticated: !!user?.email,
     };
 
     return <AuthContext.Provider value={context}>{children}</AuthContext.Provider>;

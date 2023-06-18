@@ -5,7 +5,7 @@ import { useAuth } from '../../../app/providers/auth/AuthProvider';
 import { useModal } from '../../../app/providers/modal/modalContext';
 
 const TasksHeader: FC = () => {
-    const { user, signOut } = useAuth();
+    const { user, logout } = useAuth();
     const { setContentType } = useModal();
     const createTaskHandler = () => {
         setContentType('CREATE');
@@ -14,8 +14,8 @@ const TasksHeader: FC = () => {
         <div className={styles.header}>
             <Button onClick={createTaskHandler}>Новая задача</Button>
             <div>
-                <Button type="link" onClick={signOut}>Выйти</Button>
-                <Avatar>{user}</Avatar>
+                <Button type="link" onClick={logout}>Выйти</Button>
+                <Avatar>{user?.id}</Avatar>
             </div>
         </div>
     );

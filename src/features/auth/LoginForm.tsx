@@ -1,20 +1,16 @@
 import { useAuth } from 'app/providers/auth/AuthProvider';
 import { Button, Input } from 'antd';
-import { FC, useEffect, useState } from 'react';
+import { FC, useEffect } from 'react';
 import styles from './LoginForm.module.scss';
 import { Controller, useForm } from 'react-hook-form';
 
 const LoginForm: FC = () => {
 
-    const { signIn } = useAuth();
-    const [error, setError] = useState('');
+    const { login, error, setError } = useAuth();
     const { control, handleSubmit, watch } = useForm();
 
-    const onSubmit = async (data: any) => {
-        const result = await signIn(data);
-        if (!result) {
-            setError('Неверный логин или пароль!');
-        }
+    const onSubmit = (data: any) => {
+        login(data);
     };
 
     useEffect(() => {
@@ -23,7 +19,7 @@ const LoginForm: FC = () => {
                 setError('');
             }
         });
-    }, [error, watch]);
+    }, [error, setError, watch]);
 
     return (
         <form
@@ -39,7 +35,7 @@ const LoginForm: FC = () => {
                 <strong>Логин</strong>
                 <Controller
                     render={({ field }) => <Input {...field} />}
-                    name="login"
+                    name="email"
                     control={control}
                     rules={{ required: true }}
                 />
@@ -47,7 +43,6 @@ const LoginForm: FC = () => {
             <div className={styles.group}>
                 <strong>Пароль</strong>
                 <Controller
-
                     render={({ field }) => <Input.Password {...field} type="password" />}
                     name="password"
                     control={control}

@@ -1,4 +1,5 @@
 import { Provider } from 'react-redux';
+import { BrowserRouter } from 'react-router-dom';
 import AppRouter from './app/providers/router/AppRouter';
 import { MainLayout } from './app/layouts/MainLayout';
 import { store } from 'app/store';
@@ -7,15 +8,17 @@ import ModalContextProvider from './app/providers/modal/modalContext';
 
 function App() {
     return (
-        <Provider store={store}>
-            <AuthProvider>
-                <ModalContextProvider>
-                    <MainLayout>
-                        <AppRouter />
-                    </MainLayout>
-                </ModalContextProvider>
-            </AuthProvider>
-        </Provider>
+        <BrowserRouter>
+            <Provider store={store}>
+                <AuthProvider>
+                    <ModalContextProvider>
+                        <MainLayout>
+                            <AppRouter />
+                        </MainLayout>
+                    </ModalContextProvider>
+                </AuthProvider>
+            </Provider>
+        </BrowserRouter>
     );
 }
 

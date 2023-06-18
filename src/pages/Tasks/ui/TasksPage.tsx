@@ -14,17 +14,17 @@ type IGroup = Record<TaskStatus, Task[]>;
 
 const TasksPage: FC = () => {
     const { tasks, currentTask } = useTypedSelector(tasksState);
-    const { authorized } = useAuth();
+    const { authenticated } = useAuth();
     const location = useLocation();
     const { fetchTasks, fetchAuthors } = useActions();
     const [group, setGroup] = useState<IGroup>({} as IGroup);
 
     useEffect(() => {
-        if (authorized) {
+        if (authenticated) {
             fetchTasks();
             fetchAuthors();
         }
-    }, [authorized, fetchAuthors, fetchTasks]);
+    }, [authenticated, fetchAuthors, fetchTasks]);
 
     useEffect(() => {
         if (!!tasks.length) {
@@ -36,7 +36,7 @@ const TasksPage: FC = () => {
         }
     }, [tasks]);
 
-    if (!authorized) {
+    if (!authenticated) {
         return <Navigate to="/error" state={{ from: location }} replace />;
     }
 
